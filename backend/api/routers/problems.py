@@ -3,11 +3,6 @@ from fastapi import APIRouter
 router = APIRouter()
 
 
-@router.get("/")
-def test_index():
-    return {"hello": "world"}
-
-
 @router.get("/problems")
 def all_problems():
     return {"problems": "all :^)"}

@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
-from api.api import router
+from api.routers import records, problems
 
 app = FastAPI()
-app.include_router(router)
+app.include_router(records.router)
+app.include_router(problems.router)
