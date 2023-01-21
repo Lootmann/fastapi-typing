@@ -49,7 +49,7 @@ class Account(BaseModel):
 
 class Problem(BaseModel):
     id: int
-    strings: str # 問題文は英語でなんていうのか
+    sentence: str
 
 
 class Record(BaseModel):
@@ -64,5 +64,5 @@ class Record(BaseModel):
 
 - 変数の命名
   - 難しいっすね
-  - 問題文 -> 実際に打つ文字列のこと -> `strings` だとちょっと変?
+  - 問題文 -> 実際に打つ文字列のこと -> `strings` だとちょっと変? -> sentence にする
   - 打ち終わった履歴を残しておきたい `History`? `Record`?
