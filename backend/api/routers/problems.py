@@ -5,9 +5,12 @@ router = APIRouter()
 
 @router.get("/problems")
 def all_problems():
-    return {"problems": "all :^)"}
+    return [
+        {"id": 1, "sentence": "very first"},
+        {"id": 2, "sentence": "whe hello friends :^)"},
+    ]
 
 
 @router.get("/problems/{problem_id}")
-def all_problems(problem_id: int):
+def problems_by_id(problem_id: int):
     return {"problem_id": problem_id}
