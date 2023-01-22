@@ -4,7 +4,7 @@ import { Records } from "./Records";
 
 import "../styles/layout.css";
 
-function App() {
+export function App() {
   return (
     <div className="app">
       <Problems />
@@ -12,5 +12,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

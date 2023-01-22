@@ -1,13 +1,11 @@
 import React from "react";
 import axios from "axios";
 
-import "../styles/layout.css";
-
 export function Records() {
   const [records, setRecords] = React.useState(null);
 
   return (
-    <div className="records a">
+    <div className="border">
       <button className="button" onClick={() => getRecords(setRecords)}>
         Get Records
       </button>
