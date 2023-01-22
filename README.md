@@ -10,6 +10,8 @@ FrontEnd <-> FastAPI で作る超かんたんなゲーム
   - `pandas` というふざけた名前のパッケージでいろいろデータを分析するらしい
   - 統計・分析の世界では デファクトスタンダードになっているくらいのとても有用なパッケージだそうで
   - 統計学の知識が必要だよ！ という訳で勉強しましょう
+- HTML+CSS
+  - 無視 見た目は度外視で Microservices はどんな感じかを掴むための実装に集中
 
 ## Api
 
@@ -60,9 +62,27 @@ class Record(BaseModel):
     registered_at: datetime
 ```
 
+
 ### Note
 
 - 変数の命名
   - 難しいっすね
   - 問題文 -> 実際に打つ文字列のこと -> `strings` だとちょっと変? -> sentence にする
-  - 打ち終わった履歴を残しておきたい `History`? `Record`?
+  - 打ち終わった履歴を残しておきたい `History`? `Record`? -> Record に決定
+
+## Todo
+
+- FrontEnd
+  - React
+    - Axios GET, POST
+- Backend
+  - FastAPI
+    - DB: Model, Access, Migrations
+      - DB はなるべく軽く触りたいので `SQLite` などを利用する
+      - Docker云々はよくわからん
+    - CRUD: API
+      - Update, Delete は行わないので Read をしっかり
+      - Create(post) は Recodeの新規登録だけなので簡単
+    - test: いろいろ
+- Notation
+  - Accountが実は不必要 Microservices の認証はまた別の機会に実装したほうが良いかも?
