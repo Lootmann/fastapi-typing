@@ -1,8 +1,6 @@
 import React from "react";
 import axios from "axios";
 
-import "../styles/problem.css";
-
 type ProblemType = {
   id: number;
   sentence: string;
@@ -24,7 +22,7 @@ export function Problems() {
   }
 
   return (
-    <div className="border">
+    <div className="text-2xl border-2 border-slate-300 rounded-md p-2">
       <button className="button" onClick={getProblem}>
         Problems
       </button>
