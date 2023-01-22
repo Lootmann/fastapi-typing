@@ -11,7 +11,8 @@ FrontEnd <-> FastAPI で作る超かんたんなゲーム
   - 統計・分析の世界では デファクトスタンダードになっているくらいのとても有用なパッケージだそうで
   - 統計学の知識が必要だよ！ という訳で勉強しましょう
 - HTML+CSS
-  - 無視 見た目は度外視で Microservices はどんな感じかを掴むための実装に集中
+  - ~~無視 見た目は度外視で Microservices はどんな感じかを掴むための実装に集中~~
+  - tailwindcss を npm 上で 使っ~~てみることにする~~た いい感じ
 
 ## Api
 
@@ -75,6 +76,9 @@ class Record(BaseModel):
 - FrontEnd
   - React
     - Axios GET, POST
+  - [x] tailwindcss
+    - だいぶ使いやすい 他のFrameworkも触って見る価値あり
+    - が、ちょっと凝ろうとするとすんごい横長になるのでどうにかする
 - Backend
   - FastAPI
     - DB: Model, Access, Migrations
