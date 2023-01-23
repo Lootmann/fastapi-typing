@@ -10,7 +10,7 @@ def test_all_problems():
     assert response.status_code == 200
     assert response.json() == [
         {"id": 1, "sentence": "very first"},
-        {"id": 2, "sentence": "whe hello friends :^)"},
+        {"id": 2, "sentence": "why hello friends :^)"},
     ]
 
 
@@ -21,7 +21,7 @@ def test_problem_by_id():
 
 
 def test_post_problem():
-    response = client.post("/problems")
+    response = client.post("/problems", json={"sentence": "hello world"})
     assert response.status_code == 200
 
 
