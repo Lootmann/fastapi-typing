@@ -1,6 +1,10 @@
 run:
 	PYTHONDONTWRITEBYTECODE=1 uvicorn api.main:app --reload
 
+.PHONY: docs
+docs:
+	google-chrome http://localhost:8000/docs
+
 .PHONY: test
 test:
 	pytest -sv
