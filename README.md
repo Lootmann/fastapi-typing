@@ -87,6 +87,7 @@ class Record(BaseModel):
     - CRUD: API
       - Update, Delete は行わないので Read をしっかり
       - Create(post) は Recodeの新規登録だけなので簡単
+    - Schema: Type Definition
     - test: いろいろ
 - Notation
   - Accountが実は不必要 Microservices の認証はまた別の機会に実装したほうが良いかも?
