@@ -1,6 +1,7 @@
 from typing import List
 
 from fastapi import APIRouter, Depends
+from fastapi.exceptions import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 import api.cruds.problem as problem_crud
@@ -11,30 +12,39 @@ router = APIRouter()
 
 
 @router.get("/problems", response_model=List[problem_schema.Problem])
-def all_problems():
-    return [
-        problem_schema.Problem(id=1, sentence="very first"),
-        problem_schema.Problem(id=2, sentence="why hello friends :^)"),
-    ]
+async def all_problems(db: AsyncSession = Depends(get_db)):
+    return await problem_crud.get_all_problems(db)
 
 
 @router.get("/problems/{problem_id}")
-def problems_by_id(problem_id: int):
-    return {"problem_by_id": problem_id}
+async def problems_by_id(problem_id: int, db: AsyncSession = Depends(get_db)):
+    return await problem_crud.get_problem(db, problem_id)
 
 
 @router.post("/problems", response_model=problem_schema.ProblemCreateResponse)
 async def create_problem(
     problem_body: problem_schema.ProblemCreate, db: AsyncSession = Depends(get_db)
 ):
-    return await problem_crud.create_task(db, problem_body)
+    return await problem_crud.create_problem(db, problem_body)
 
 
 @router.put("/problems/{problem_id}", response_model=problem_schema.ProblemCreateResponse)
-def update_problem(problem_id: int, problem_body: problem_schema.ProblemCreate):
-    return problem_schema.ProblemCreateResponse(id=problem_id, **problem_body.dict())
+async def update_problem(
+    problem_id: int, problem_body: problem_schema.ProblemCreate, db: AsyncSession = Depends(get_db)
+):
+    problem = await problem_crud.get_problem(db, problem_id=problem_id)
+
+    if not problem:
+        raise HTTPException(status_code=404, detail="Problem Not Found :^)")
+
+    return await problem_crud.update_problem(db, problem_body, updated=problem)
 
 
 @router.delete("/problems/{problem_id}", response_model=None)
-def delete_problem():
-    return
+async def delete_problem(problem_id: int, db: AsyncSession = Depends(get_db)):
+    problem = await problem_crud.get_problem(db, problem_id=problem_id)
+
+    if not problem:
+        raise HTTPException(status_code=404, detail="Problem Not Found :^)")
+
+    return await problem_crud.delete_problem(db, problem)
