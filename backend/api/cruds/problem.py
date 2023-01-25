@@ -32,3 +32,14 @@ async def get_all_problems(db: AsyncSession) -> List[Tuple[int, str]]:
     return result.all()  # type: ignore
 
 
+async def get_problem(db: AsyncSession, problem_id: int) -> Tuple[int, str] | None:
+    result: Result = await db.execute(
+        select(problem_model.Problem).filter(problem_model.Problem.id == problem_id)
+    )
+
+    problem: Tuple[problem_model.Problem] | None = result.first()  # type: ignore
+
+    if problem is None:
+        return None
+
+    return problem[0]

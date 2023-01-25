@@ -16,8 +16,8 @@ async def all_problems(db: AsyncSession = Depends(get_db)):
 
 
 @router.get("/problems/{problem_id}")
-def problems_by_id(problem_id: int):
-    return {"problem_by_id": problem_id}
+async def problems_by_id(problem_id: int, db: AsyncSession = Depends(get_db)):
+    return await problem_crud.get_problem(db, problem_id)
 
 
 @router.post("/problems", response_model=problem_schema.ProblemCreateResponse)
