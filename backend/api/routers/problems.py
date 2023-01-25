@@ -41,5 +41,10 @@ async def update_problem(
 
 
 @router.delete("/problems/{problem_id}", response_model=None)
-def delete_problem():
-    return
+async def delete_problem(problem_id: int, db: AsyncSession = Depends(get_db)):
+    problem = await problem_crud.get_problem(db, problem_id=problem_id)
+
+    if not problem:
+        raise HTTPException(status_code=404, detail="Problem Not Found :^)")
+
+    return await problem_crud.delete_problem(db, problem)

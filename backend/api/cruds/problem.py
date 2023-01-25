@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List
 
 from sqlalchemy import select
 from sqlalchemy.engine import Result
@@ -56,3 +56,8 @@ async def update_problem(
     await db.commit()
     await db.refresh(updated)
     return updated
+
+
+async def delete_problem(db: AsyncSession, original: problem_model.Problem):
+    await db.delete(original)
+    await db.commit()
