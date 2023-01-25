@@ -27,7 +27,7 @@ def problems_by_id(problem_id: int):
 async def create_problem(
     problem_body: problem_schema.ProblemCreate, db: AsyncSession = Depends(get_db)
 ):
-    return await problem_crud.create_task(db, problem_body)
+    return await problem_crud.create_problem(db, problem_body)
 
 
 @router.put("/problems/{problem_id}", response_model=problem_schema.ProblemCreateResponse)
