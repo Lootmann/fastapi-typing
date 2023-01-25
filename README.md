@@ -56,6 +56,29 @@ class Record(BaseModel):
     registered_at: datetime
 ```
 
+## Schema
+
+```sql
+-- sqlite> .table
+-- problems  records
+
+-- sqlite> .schema problems
+CREATE TABLE problems (
+        id INTEGER NOT NULL,
+        sentence VARCHAR(1024),
+        PRIMARY KEY (id)
+);
+
+-- sqlite> .schema records
+CREATE TABLE records (
+        id INTEGER NOT NULL,
+        actual_typing VARCHAR(9999),
+        duration INTEGER,
+        registered_at DATETIME,
+        PRIMARY KEY (id)
+);
+```
+
 ### Note
 
 - 変数の命名
