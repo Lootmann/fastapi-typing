@@ -1,3 +1,7 @@
+from typing import List, Tuple
+
+from sqlalchemy import select
+from sqlalchemy.engine import Result
 from sqlalchemy.ext.asyncio import AsyncSession
 
 import api.models.problem as problem_model
@@ -14,3 +18,17 @@ async def create_problem(
     await db.refresh(problem)
 
     return problem
+
+
+async def get_all_problems(db: AsyncSession) -> List[Tuple[int, str]]:
+    result: Result = await (
+        db.execute(
+            select(
+                problem_model.Problem.id,
+                problem_model.Problem.sentence,
+            )
+        )
+    )
+    return result.all()  # type: ignore
+
+

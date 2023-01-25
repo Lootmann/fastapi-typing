@@ -11,11 +11,8 @@ router = APIRouter()
 
 
 @router.get("/problems", response_model=List[problem_schema.Problem])
-def all_problems():
-    return [
-        problem_schema.Problem(id=1, sentence="very first"),
-        problem_schema.Problem(id=2, sentence="why hello friends :^)"),
-    ]
+async def all_problems(db: AsyncSession = Depends(get_db)):
+    return await problem_crud.get_all_problems(db)
 
 
 @router.get("/problems/{problem_id}")
