@@ -43,3 +43,16 @@ async def get_problem(db: AsyncSession, problem_id: int) -> Tuple[int, str] | No
         return None
 
     return problem[0]
+
+
+async def update_problem(
+    db: AsyncSession,
+    problem_create: problem_schema.ProblemCreate,
+    updated: problem_model.Problem,
+) -> problem_model.Problem:
+    updated.sentence = problem_create.sentence
+    db.add(updated)
+
+    await db.commit()
+    await db.refresh(updated)
+    return updated

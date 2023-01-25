@@ -1,6 +1,7 @@
 from typing import List
 
 from fastapi import APIRouter, Depends
+from fastapi.exceptions import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 import api.cruds.problem as problem_crud
@@ -28,8 +29,15 @@ async def create_problem(
 
 
 @router.put("/problems/{problem_id}", response_model=problem_schema.ProblemCreateResponse)
-def update_problem(problem_id: int, problem_body: problem_schema.ProblemCreate):
-    return problem_schema.ProblemCreateResponse(id=problem_id, **problem_body.dict())
+async def update_problem(
+    problem_id: int, problem_body: problem_schema.ProblemCreate, db: AsyncSession = Depends(get_db)
+):
+    problem = await problem_crud.get_problem(db, problem_id=problem_id)
+
+    if not problem:
+        raise HTTPException(status_code=404, detail="Problem Not Found :^)")
+
+    return await problem_crud.update_problem(db, problem_body, updated=problem)
 
 
 @router.delete("/problems/{problem_id}", response_model=None)
