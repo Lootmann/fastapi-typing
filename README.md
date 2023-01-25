@@ -21,11 +21,12 @@ Endpoint とよぶらしい
 - GET `/problems`
 - POST `/problems`
 - GET `/problems/{problem_id}`
+- PUT `/problems/{problem_id}`
+- DELETE `/problems/{problem_id}`
+
 - GET `/records`
 - POST `/records`
 - GET `/records/{record_id}`
-
-あとはアカウント系などを云々(これは後でよい)
 
 `/problems` はすべての問題を取得する<br>
 `/problems/id/` はid指定で問題を取得する<br>
@@ -43,13 +44,6 @@ from datetime import datetime
 from pydantic import BaseModel
 
 
-class Account(BaseModel):
-    id: int
-    name: str
-    email: str
-    password: str
-
-
 class Problem(BaseModel):
     id: int
     sentence: str
@@ -57,12 +51,10 @@ class Problem(BaseModel):
 
 class Record(BaseModel):
     id: int
-    accounts: Account
     actual_typing: str
-    duration: datetime.timedelta
+    duration: int
     registered_at: datetime
 ```
-
 
 ### Note
 
@@ -70,6 +62,10 @@ class Record(BaseModel):
   - 難しいっすね
   - 問題文 -> 実際に打つ文字列のこと -> `strings` だとちょっと変? -> sentence にする
   - 打ち終わった履歴を残しておきたい `History`? `Record`? -> Record に決定
+
+- Account
+  - ごちゃごちゃするのでAccount認証系は全部作成しないことにする
+  - Microservice の認証は基本的に糞の山 大変面倒らしいのでもうちょい慣れてから
 
 ## Todo
 
@@ -81,13 +77,16 @@ class Record(BaseModel):
     - が、ちょっと凝ろうとするとすんごい横長になるのでどうにかする
 - Backend
   - FastAPI
-    - DB: Model, Access, Migrations
+    - [x] DB: Model, Access, Migrations
       - DB はなるべく軽く触りたいので `SQLite` などを利用する
       - Docker云々はよくわからん
-    - CRUD: API
+    - [x] CRUD: API
       - Update, Delete は行わないので Read をしっかり
       - Create(post) は Recodeの新規登録だけなので簡単
-    - Schema: Type Definition
-    - test: いろいろ
-- Notation
-  - Accountが実は不必要 Microservices の認証はまた別の機会に実装したほうが良いかも?
+    - [x] Schema: Type Definition
+    - [x] Models: Migrations
+      - About `ORM` (Object Relation Mapping)
+      - SQLAlchemy
+    - [x] test
+      - async な test
+      - DI: Dependency Injection
