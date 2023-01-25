@@ -20,7 +20,7 @@ async def create_problem(
     return problem
 
 
-async def get_all_problems(db: AsyncSession) -> List[Tuple[int, str]]:
+async def get_all_problems(db: AsyncSession) -> List[problem_model.Problem]:
     result: Result = await (
         db.execute(
             select(
@@ -32,12 +32,12 @@ async def get_all_problems(db: AsyncSession) -> List[Tuple[int, str]]:
     return result.all()  # type: ignore
 
 
-async def get_problem(db: AsyncSession, problem_id: int) -> Tuple[int, str] | None:
+async def get_problem(db: AsyncSession, problem_id: int) -> problem_model.Problem | None:
     result: Result = await db.execute(
         select(problem_model.Problem).filter(problem_model.Problem.id == problem_id)
     )
 
-    problem: Tuple[problem_model.Problem] | None = result.first()  # type: ignore
+    problem: problem_model.Problem | None = result.first()  # type: ignore
 
     if problem is None:
         return None
@@ -50,7 +50,7 @@ async def update_problem(
     problem_create: problem_schema.ProblemCreate,
     updated: problem_model.Problem,
 ) -> problem_model.Problem:
-    updated.sentence = problem_create.sentence
+    updated.sentence = problem_create.sentence  # type:ignore
     db.add(updated)
 
     await db.commit()

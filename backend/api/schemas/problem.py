@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 
 
 class ProblemBase(BaseModel):
-    sentence: str | None = Field("", example="typing sentence")
+    sentence: str = Field("", example="typing sentence")
 
 
 class ProblemCreate(ProblemBase):
