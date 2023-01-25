@@ -1,8 +1,11 @@
 from typing import List
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from sqlalchemy.ext.asyncio import AsyncSession
 
+import api.cruds.problem as problem_crud
 import api.schemas.problem as problem_schema
+from api.db import get_db
 
 router = APIRouter()
 
@@ -21,8 +24,10 @@ def problems_by_id(problem_id: int):
 
 
 @router.post("/problems", response_model=problem_schema.ProblemCreateResponse)
-def create_problem(problem_body: problem_schema.ProblemCreate):
-    return problem_schema.ProblemCreateResponse(id=1, **problem_body.dict())
+async def create_problem(
+    problem_body: problem_schema.ProblemCreate, db: AsyncSession = Depends(get_db)
+):
+    return await problem_crud.create_task(db, problem_body)
 
 
 @router.put("/problems/{problem_id}", response_model=problem_schema.ProblemCreateResponse)
