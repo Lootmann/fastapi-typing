@@ -10,8 +10,8 @@ engine = create_engine(DB_URL, echo=True)
 def reset_database():
     problem_base.metadata.drop_all(bind=engine)
     problem_base.metadata.create_all(bind=engine)
-    record_base.metadata.create_all(bind=engine)
     record_base.metadata.drop_all(bind=engine)
+    record_base.metadata.create_all(bind=engine)
 
 
 if __name__ == "__main__":

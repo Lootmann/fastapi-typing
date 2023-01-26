@@ -21,15 +21,24 @@ export function Problems() {
     });
   }
 
+  function truncate(sentence: string): string {
+    return sentence.substring(0, Math.min(70, sentence.length / 4));
+  }
+
   return (
     <div className="text-2xl border-2 border-slate-300 rounded-md p-2">
       <button className="button" onClick={getProblem}>
         Problems
       </button>
 
-      <ul className="problem-list">
+      <ul className="my-2">
         {problems.map((problem) => {
-          return <li key={problem.id}>{problem.sentence}</li>;
+          return (
+            <li key={problem.id} className="px-2 hover:bg-slate-600 rounded-md">
+              {problem.id}. {truncate(problem.sentence)}(
+              {problem.sentence.length})
+            </li>
+          );
         })}
       </ul>
     </div>
